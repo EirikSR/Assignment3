@@ -11,30 +11,55 @@ class Array:
             ValueError: If the values are not all of the same type.
             ValueError: If the number of values does not fit with the shape.
         """
-        if len(values) != shape[0]:
-            raise ValueError(
-                f"Number of values doesnt mach shape. Values = {len(values)}, shape = {shape[0]}"
-            )
 
         val_check = values[0]
         Array = []
+        # print([shape[0], shape[1]])
+        try:
+            m = shape[1]
 
-        for value in values:
-            if isinstance(value, type(val_check)):
-                Array.append(value)
-            else:
+            if len(values) != shape[0] * shape[1]:
                 raise ValueError(
-                    f"Not all values have same type, contains {type(value)} and {type(val_check)}"
+                    f"Number of values doesnt mach shape. Values = {len(values)}, shape = {shape[0]}"
                 )
 
+            for i in range(0, len(values)):
+                if i % shape[1] == 0:
+                    Array.append([])
+
+                if isinstance(values[i], type(val_check)):
+                    Array[-1].append(values[i])
+                else:
+                    raise ValueError(
+                        f"Not all values have same type, contains {type(values[i])} and {type(val_check)}"
+                    )
+        except:
+            if len(values) != shape[0]:
+                raise ValueError(
+                    f"Number of values doesnt mach shape. Values = {len(values)}, shape = {shape[0]}"
+                )
+            for i in range(0, len(values)):
+
+                if isinstance(values[i], type(val_check)):
+                    Array.append(values[i])
+                else:
+                    raise ValueError(
+                        f"Not all values have same type, contains {type(values[i])} and {type(val_check)}"
+                    )
+
         self.array = Array
+        self.shape = shape
 
     def __str__(self):
         """Returns a nicely printable string representation of the array.
         Returns:
             str: A string representation of the array.
         """
-        return "strin "  # + str(self.array)
+        string = ""
+        for x in self.array:
+            string += str(x)
+            string += "\n"
+        return string  # + str(self.array)
 
     def __add__(self, other):
         """Element-wise adds Array with another Array or number.
@@ -45,16 +70,28 @@ class Array:
         Returns:
             Array: the sum as a new array.
         """
-
-        try:
+        if self.shape == other.shape:
             ret_array = []
-            if len(self.array) == len(other.array):
-                for i in range(0, len(self.array)):
-                    ret_array.append(self.array[i] + other.array[i])
-            print(ret_array)
-            return ret_array
-        except:
-            print("Not yet implemented")
+            try:
+                m = self.shape[1]
+
+                for x, y in zip(self.array, other.array):
+                    temp = []
+                    for i in range(0, len(x)):
+                        temp.append(x[i] + y[i])
+                    ret_array.append(temp)
+                return ret_array
+            except:
+                ret_array = []
+                if len(self.array) == len(other.array):
+                    for i in range(0, len(self.array)):
+                        ret_array.append(self.array[i] + other.array[i])
+                print(ret_array)
+                return ret_array
+
+        else:
+            return NotImplemented
+            # raise ValueError("Array dimentions not equal; ")
 
     def __radd__(self, other):
         """Element-wise adds Array with another Array or number.
@@ -65,6 +102,15 @@ class Array:
         Returns:
             Array: the sum as a new array.
         """
+        try:
+            ret_array = []
+            if len(self.array) == len(other.array):
+                for i in range(0, len(self.array)):
+                    ret_array.append(self.array[i] + other.array[i])
+            print(ret_array)
+            return ret_array
+        except:
+            return NotImplemented
 
     def __sub__(self, other):
         """Element-wise subtracts an Array or number from this Array.
@@ -82,7 +128,11 @@ class Array:
                     ret_array.append(self.array[i] - other.array[i])
             return ret_array
         except:
-            print("Not yet implemented")
+            return NotImplemented
+
+    def __getitem__(self, item):
+        # Returns element at int item's location
+        return self.array[item]
 
     def __rsub__(self, other):
         """Element-wise subtracts this Array from a number or Array.
@@ -93,7 +143,16 @@ class Array:
         Returns:
             Array: the difference as a new array.
         """
-        pass
+        try:
+            ret_array = []
+            if len(self.array) == len(other.array):
+                for i in range(0, len(self.array)):
+                    ret_array.append(
+                        other.array[i] - self.array[i]
+                    )  # Switched due to right side
+            return ret_array
+        except:
+            return NotImplemented
 
     def __mul__(self, other):
         """Element-wise multiplies this Array with a number or array.
@@ -120,7 +179,7 @@ class Array:
                         ret_array.append(self.array[i] * other.array[i])
                 return ret_array
             except:
-                print("Not yet implemented")
+                return NotImplemented
 
     def __rmul__(self, other):
         """Element-wise multiplies this Array with a number or array.
@@ -131,7 +190,23 @@ class Array:
         Returns:
             Array: a new array with every element multiplied with `other`.
         """
-        pass
+        try:
+            float(other)
+            ret_array = []
+
+            for i in range(0, len(self.array)):
+                ret_array.append(self.array[i] * other)
+            return ret_array
+        except:
+
+            try:
+                ret_array = []
+                if len(self.array) == len(other.array):
+                    for i in range(0, len(self.array)):
+                        ret_array.append(self.array[i] * other.array[i])
+                return ret_array
+            except:
+                return NotImplemented
 
     def __eq__(self, other):
         """Compares an Array with another Array.
@@ -221,12 +296,8 @@ class Array:
         return placeholder
 
 
-"""
-shape = (3,)
-my_array = Array(shape, 1, 2, 3)
-m_array = Array(shape, 1, 2, 3)
-print(my_array + m_array)"""
-
-
-def pr_():
-    print("hei")
+shape = (3, 3)
+my_array = Array(shape, 1, 2, 3, 3, 2, 1, 2, 3, 1)
+by_array = Array(shape, 1, 2, 3, 3, 2, 1, 2, 3, 1)
+print(my_array + by_array)
+print(my_array[2])
