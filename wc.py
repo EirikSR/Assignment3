@@ -37,10 +37,11 @@ if split(file_name)[0] == "*":
 
             type_target = file_name.split(".")[1]
 
-            if split(file_)[0] != ".":  # Avoids files such as .gitignore
-                name, type_ = file_.split(".")
-                if type_ == type_target:
-                    get_file_info(name, type_)
+            for file_ in file_lst:
+                if split(file_)[0] != ".":  # Avoids files such as .gitignore
+                    name, type_ = file_.split(".")
+                    if type_ == type_target:
+                        get_file_info(name, type_)
 
         else:
             print("Error, no file format found after *")
@@ -49,7 +50,3 @@ if split(file_name)[0] == "*":
             if split(file_)[0] != ".":  # Avoids files such as .gitignore
                 name, type_ = file_.split(".")
                 get_file_info(name, type_)
-
-# get_file_info("b", "py")
-# ret = get_file_info("*.txt")
-# print(ret)
