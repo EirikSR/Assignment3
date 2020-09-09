@@ -11,14 +11,30 @@ class Array:
             ValueError: If the values are not all of the same type.
             ValueError: If the number of values does not fit with the shape.
         """
-        pass
+        if len(values) != shape[0]:
+            raise ValueError(
+                f"Number of values doesnt mach shape. Values = {len(values)}, shape = {shape[0]}"
+            )
+
+        val_check = values[0]
+        Array = []
+
+        for value in values:
+            if isinstance(value, type(val_check)):
+                Array.append(value)
+            else:
+                raise ValueError(
+                    f"Not all values have same type, contains {type(value)} and {type(val_check)}"
+                )
+
+        self.array = Array
 
     def __str__(self):
         """Returns a nicely printable string representation of the array.
         Returns:
             str: A string representation of the array.
         """
-        pass
+        return "strin "  # + str(self.array)
 
     def __add__(self, other):
         """Element-wise adds Array with another Array or number.
@@ -29,7 +45,16 @@ class Array:
         Returns:
             Array: the sum as a new array.
         """
-        pass
+
+        try:
+            ret_array = []
+            if len(self.array) == len(other.array):
+                for i in range(0, len(self.array)):
+                    ret_array.append(self.array[i] + other.array[i])
+            print(ret_array)
+            return ret_array
+        except:
+            print("Not yet implemented")
 
     def __radd__(self, other):
         """Element-wise adds Array with another Array or number.
@@ -40,7 +65,6 @@ class Array:
         Returns:
             Array: the sum as a new array.
         """
-        pass
 
     def __sub__(self, other):
         """Element-wise subtracts an Array or number from this Array.
@@ -51,7 +75,14 @@ class Array:
         Returns:
             Array: the difference as a new array.
         """
-        pass
+        try:
+            ret_array = []
+            if len(self.array) == len(other.array):
+                for i in range(0, len(self.array)):
+                    ret_array.append(self.array[i] - other.array[i])
+            return ret_array
+        except:
+            print("Not yet implemented")
 
     def __rsub__(self, other):
         """Element-wise subtracts this Array from a number or Array.
@@ -135,3 +166,14 @@ class Array:
             float: The value of the smallest element in the array.
         """
         pass
+
+
+"""
+shape = (3,)
+my_array = Array(shape, 1, 2, 3)
+m_array = Array(shape, 1, 2, 3)
+print(my_array + m_array)"""
+
+
+def pr_():
+    print("hei")

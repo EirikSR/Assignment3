@@ -1,102 +1,96 @@
+import Array as a
+import pytest
+
 test = "er"
 shape = (3,)
 
 
 def test_string():
-    assert isinstance(Array.print(), str)
+    assert isinstance(a.Array(shape, 1, 2, 3).__str__(), str) == True
 
 
 @pytest.mark.parametrize(
     "arg, expected_output",
     [
-        [([shape, 3, 2, 5], [shape, 3, 2, 1]), [6, 4, 6]],
-        [([shape, 4, 2, 2], [shape, 2, 1, 3]), [6, 3, 5]],
-        [([shape, 6, 6, 7], [shape, 4, 0, 2]), [10, 6, 9]],
+        [(a.Array(shape, 3, 2, 5), a.Array(shape, 3, 2, 1)), [6, 4, 6]],
+        [(a.Array(shape, 4, 2, 2), a.Array(shape, 2, 1, 3)), [6, 3, 5]],
+        [(a.Array(shape, 6, 6, 7), a.Array(shape, 4, 0, 2)), [10, 6, 9]],
     ],
 )
 def test_add(arg, expected_output):
-    assert (Array(arg[0]) + Array(arg[1])) == expected_output
+    assert arg[0] + arg[1] == expected_output
 
 
 @pytest.mark.parametrize(
     "arg, expected_output",
     [
-        [([shape, 3, 2, 5], [shape, 3, 2, 1]), [0, 0, 4]],
-        [([shape, 4, 2, 2], [shape, 2, 1, 3]), [2, 1, -1]],
-        [([shape, 6, 6, 7], [shape, 4, 0, 2]), [2, 6, 5]],
+        [(a.Array(shape, 3, 2, 5), a.Array(shape, 3, 2, 1)), [0, 0, 4]],
+        [(a.Array(shape, 4, 2, 2), a.Array(shape, 2, 1, 3)), [2, 1, -1]],
+        [(a.Array(shape, 6, 6, 7), a.Array(shape, 4, 0, 2)), [2, 6, 5]],
     ],
 )
 def test_sub(arg, expected_output):
-    assert (Array(arg[0]) - Array(arg[1])) == expected_output
+    assert arg[0] - arg[1] == expected_output
 
 
-@pytest.mark.parametrize(
+@ pytest.mark.parametrize(
     "arg, expected_output",
     [
-        [([shape, 3, 2, 5], 2), [6, 4, 10]],
-        [([shape, 4, 2, 2], Array([shape, 2, 1, 3])), [8, 2, 6]],
-        [([shape, 6, 6, 7], -1), [-6, -6, -7]],
-    ],
-)
+        [(a.Array(shape, 3, 2, 5), 2), [6, 4, 10]],
+        [(a.Array(shape, 4, 2, 2), a.Array(a.Array(shape, 2, 1, 3)), [8, 2, 6]],
+        [(a.Array(shape, 6, 6, 7), -1), [-6, -6, -7]],
+    ],)
 def test_mul(arg, expected_output):
-    assert (Array(arg[0]) - arg[1] == expected_output
+    assert (arg[0] - arg[1]) == expected_output
 
 @pytest.mark.parametrize(
     "arg, expected_output",
     [
-        [([shape, 3, 2, 5], [shape, 3, 2, 5]), True],
-        [([shape, 4, 2, 2], [shape, 2, 1, 3]), False],
-        [([shape, 6, 6, 7], [shape, 6, 6, 7]), True],
-    ],
-)
+        [(a.Array(shape, 3, 2, 5), a.Array(shape, 3, 2, 5), True],
+        [(a.Array(shape, 4, 2, 2), a.Array(shape, 2, 1, 3), False],
+        [(a.Array(shape, 6, 6, 7), a.Array(shape, 6, 6, 7), True],
+    ],)
 def test_equal(arg, expected_output):
-    assert (Array(arg[0]) == Array(arg[1])) == expected_output
+    assert (arg[0] == arg[1]) == expected_output
 
 
 @pytest.mark.parametrize(
     "arg, expected_output",
     [
-        [([shape, 3, 2, 5], [Array(shape, 3, 2, 5)]), [True, True, True]],
-        [([shape, 4, 2, 2], [Array(shape, 2, 2, 3)]), [False, True, False]],
-        [([shape, 6, 6, 7], 6, [True, True, False]],
-    ],
-)
+        [(a.Array(shape, 3, 2, 5), [a.Array(shape, 3, 2, 5)), [True, True, True]],
+        [(a.Array(shape, 4, 2, 2), [a.Array(shape, 2, 2, 3)), [False, True, False]],
+        [(a.Array(shape, 6, 6, 7), 6), [True, True, False]],
+    ],)
 def test_isequal(arg, expected_output):
-    assert (Array(arg[0]) == arg[1]) == expected_output
+    assert (arg[0) == arg[1]) == expected_output
 
 
 @pytest.mark.parametrize(
     "arg, expected_output",
-    [
-        [[shape, 3, 2, 4], 3],
-        [[shape, 4, 2, 2], 8./3],
-        [[shape, 6, 6, 7], 19./3],
-    ],
-)
+        [[a.Array(shape, 3, 2, 4), 3], 
+        [a.Array(shape, 4, 2, 2), 8.0 / 3], 
+        [a.Array(shape, 6, 6, 7), 19.0 / 3]
+    ],)
 def test_mean(arg, expected_output):
-    assert Array(arg).mean() - expected_output < margin
+    assert a.Array(arg).mean() - expected_output < margin
 
 
 @pytest.mark.parametrize(
     "arg, expected_output",
     [
-        [[shape, 3, 2, 4], 0.66666666666667],
-        [[shape, 4, 2, 2], 0.88888888888889],
-        [[shape, 6, 6, 7], 0.22222222222222],
-    ],
-)
+        [a.Array(shape, 3, 2, 4), 0.66666666666667],
+        [a.Array(shape, 4, 2, 2), 0.88888888888889],
+        [a.Array(shape, 6, 6, 7), 0.22222222222222],
+    ],)
 def test_variance(arg, expected_output):
-    assert Array(arg).variance() - expected_output < 1E-8
+    assert arg.variance() - expected_output < 1e-8
 
 
 @pytest.mark.parametrize(
     "arg, expected_output",
-    [
-        [[shape, 3, 2, 4], 2],
-        [[shape, 4, 2, 2], 2],
-        [[shape, 6, 6.1, 7], 6],
-    ],
-)
+        [[a.Array(shape, 3, 2, 4), 2],
+        [a.Array(shape, 4, 2, 2), 2],
+        [a.Array(shape, 6, 6.1, 7), 6]
+    ],)
 def test_min_element(arg, expected_output):
-    assert Array(arg).min_element() - expected_output < 1E-8
-
+    assert arg.min_element() - expected_output < 1e-8
