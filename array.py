@@ -170,16 +170,30 @@ class Array:
         Returns:
             Array: the difference as a new array.
         """
-        try:
+        if self.shape == other.shape:
             ret_array = []
-            if len(self.array) == len(other.array):
-                for i in range(0, len(self.array)):
-                    ret_array.append(
-                        other.array[i] - self.array[i]
-                    )  # Switched due to right side
-            return ret_array
-        except:
+            try:
+                m = self.shape[1]
+
+                for x, y in zip(self.array, other.array):
+                    temp = []
+                    for i in range(0, len(x)):
+                        temp.append(y[i] - x[i])  # Flipped due to right hand function
+                    ret_array.append(temp)
+                return ret_array
+            except:
+                ret_array = []
+                if len(self.array) == len(other.array):
+                    for i in range(0, len(self.array)):
+                        ret_array.append(
+                            other.array[i] - self.array[i]
+                        )  # Flipped due to right hand
+                print(ret_array)
+                return ret_array
+
+        else:
             return NotImplemented
+            # raise ValueError("Array dimentions not equal; ")
 
     def __mul__(self, other):
         """Element-wise multiplies this Array with a number or array.
@@ -190,22 +204,40 @@ class Array:
         Returns:
             Array: a new array with every element multiplied with `other`.
         """
-        try:
+        ret_array = []
+        try:  # Tries to multiply array with scalar
             float(other)
-            ret_array = []
+            try:  # Tries to multiply higher dimentional matrix with scalar
+                m = self.shape[1]
 
-            for i in range(0, len(self.array)):
-                ret_array.append(self.array[i] * other)
-            return ret_array
-        except:
+                for x in self.array:
+                    temp = []
+                    for i in range(0, len(x)):
+                        temp.append(x[i] * other)
 
-            try:
-                ret_array = []
-                if len(self.array) == len(other.array):
-                    for i in range(0, len(self.array)):
-                        ret_array.append(self.array[i] * other.array[i])
+                    ret_array.append(temp)
                 return ret_array
-            except:
+            except:  # Multiplies 1d array with scalar
+                for i in range(0, len(self.array)):
+                    ret_array.append(self.array[i] * other)
+                return ret_array
+        except:  # Multiplies two arrays together
+            if self.shape == other.shape:  # Checks that arrays are of equal dimensions
+                try:
+                    m = self.shape[1]
+
+                    for x, y in zip(self.array, other.array):
+                        temp = []
+                        for i in range(0, len(x)):
+                            temp.append(x[i] * y[i])
+                        ret_array.append(temp)
+                    return ret_array
+                except:  # Multiplies 1d-arrays
+                    if len(self.array) == len(other.array):
+                        for i in range(0, len(self.array)):
+                            ret_array.append(self.array[i] * other.array[i])
+                    return ret_array
+            else:
                 return NotImplemented
 
     def __rmul__(self, other):
@@ -217,22 +249,40 @@ class Array:
         Returns:
             Array: a new array with every element multiplied with `other`.
         """
-        try:
+        ret_array = []
+        try:  # Tries to multiply array with scalar
             float(other)
-            ret_array = []
+            try:  # Tries to multiply higher dimentional matrix with scalar
+                m = self.shape[1]
 
-            for i in range(0, len(self.array)):
-                ret_array.append(self.array[i] * other)
-            return ret_array
-        except:
+                for x in self.array:
+                    temp = []
+                    for i in range(0, len(x)):
+                        temp.append(x[i] * other)
 
-            try:
-                ret_array = []
-                if len(self.array) == len(other.array):
-                    for i in range(0, len(self.array)):
-                        ret_array.append(self.array[i] * other.array[i])
+                    ret_array.append(temp)
                 return ret_array
-            except:
+            except:  # Multiplies 1d array with scalar
+                for i in range(0, len(self.array)):
+                    ret_array.append(self.array[i] * other)
+                return ret_array
+        except:  # Multiplies two arrays together
+            if self.shape == other.shape:  # Checks that arrays are of equal dimensions
+                try:
+                    m = self.shape[1]
+
+                    for x, y in zip(self.array, other.array):
+                        temp = []
+                        for i in range(0, len(x)):
+                            temp.append(x[i] * y[i])
+                        ret_array.append(temp)
+                    return ret_array
+                except:  # Multiplies 1d-arrays
+                    if len(self.array) == len(other.array):
+                        for i in range(0, len(self.array)):
+                            ret_array.append(self.array[i] * other.array[i])
+                    return ret_array
+            else:
                 return NotImplemented
 
     def __eq__(self, other):
@@ -244,6 +294,7 @@ class Array:
         Returns:
             bool: True if the two arrays are equal. False otherwise.
         """
+
         if len(self.array) == len(other.array):
             for i in range(0, len(self.array)):
                 if self.array[i] != other.array[i]:
@@ -264,25 +315,54 @@ class Array:
         Raises:
             ValueError: if the shape of self and other are not equal.
         """
+
         ret_array = []
         try:
             Scalar = float(other)
+            try:
+                m = self.shape[1]
 
-            for i in range(0, len(self.array)):
-                if self.array[i] == Scalar:
-                    ret_array.append(True)
-                else:
-                    ret_array.append(False)
-            return ret_array
-        except:
+                for x in self.array:
+                    for i in range(0, len(x)):
+                        if x[i] != Scalar:
+                            ret_array.append(False)
+                        else:
+                            ret_array.append(True)
+                return ret_array
 
-            if len(self.array) == len(other.array):
+            except:
                 for i in range(0, len(self.array)):
-                    if self.array[i] == other.array[i]:
+                    if self.array[i] == Scalar:
                         ret_array.append(True)
                     else:
                         ret_array.append(False)
                 return ret_array
+
+        except:
+            if self.shape == other.shape:
+
+                try:
+                    m = self.shape[1]
+
+                    for x, y in zip(self.array, other.array):
+
+                        for i in range(0, len(x)):
+                            if x[i] != y[i]:
+                                ret_array.append(False)
+                            else:
+                                ret_array.append(True)
+                    return ret_array
+
+                except:
+                    if len(self.array) == len(other.array):
+
+                        for i in range(0, len(self.array)):
+                            if self.array[i] != other.array[i]:
+                                ret_array.append(False)
+                            else:
+                                ret_array.append(True)
+                        return ret_array
+
             else:
                 raise ValueError("Arrays of unequal dimentions")
 
@@ -293,9 +373,18 @@ class Array:
             float: The mean of the array values.
         """
         ret = 0
-        for i in range(len(self.array)):
-            ret += self.array[i]
-        return float(ret) / len(self.array)
+        try:
+            m = self.shape[1]
+
+            for x in self.array:
+                for i in x:
+                    ret += i
+            return float(ret) / (self.shape[0] * m)
+
+        except:
+            for i in range(len(self.array)):
+                ret += self.array[i]
+            return float(ret) / len(self.array)
 
     def variance(self):
         """Computes the variance of the array
@@ -306,9 +395,18 @@ class Array:
         """
         ret = 0
         mean = self.mean()
-        for i in range(len(self.array)):
-            ret += (self.array[i] - mean) ** 2
-        return float(ret) / len(self.array)
+
+        try:
+            m = self.shape[1]
+
+            for x in self.array:
+                for i in x:
+                    ret += (i - mean) ** 2
+            return float(ret / (self.shape[0] * m))
+        except:
+            for i in range(len(self.array)):
+                ret += (self.array[i] - mean) ** 2
+            return float(ret) / len(self.array)
 
     def min_element(self):
         """Returns the smallest value of the array.
@@ -317,14 +415,23 @@ class Array:
             float: The value of the smallest element in the array.
         """
         placeholder = False
-        for i in range(len(self.array)):
-            if self.array[i] < placeholder or placeholder == False:
-                placeholder = self.array[i]
-        return placeholder
+
+        try:
+            m = self.shape[1]
+
+            for x in self.array:
+                for i in x:
+                    if i < placeholder or placeholder == False:
+                        placeholder = i
+            return placeholder
+        except:
+            for i in range(len(self.array)):
+                if self.array[i] < placeholder or placeholder == False:
+                    placeholder = self.array[i]
+            return placeholder
 
 
-shape = (3, 3)
-my_array = Array(shape, 1, 2, 3, 3, 2, 1, 2, 3, 1)
-by_array = Array(shape, 1, 2, 3, 3, 2, 1, 2, 3, 1)
-print(my_array + by_array)
-print(my_array[2])
+shape = (3, 2)
+my_array = Array(shape, 1, 2, 3, 3, 2, 1)
+print(my_array)
+print(my_array * 2)

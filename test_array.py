@@ -47,7 +47,7 @@ def test_sub(arg, expected_output):
         [(a.Array(shape, 6, 6, 7), -1), [-6, -6, -7]],
         [(a.Array(shape2, 4, 2, 2, 2), a.Array(shape2, 1, 2, 1, 3)), [[4, 4], [2, 6]]],
         [(a.Array(shape2, 6, 6, 7, 3), a.Array(shape2, 1, 4, 0, 2)), [[6, 24], [0, 6]]],
-        [(a.Array(shape2, 6, 6, 7, 3), 2), [[12, 12], [14, 6]]],
+        [(a.Array(shape2, 6, 5, 7, 3), 2), [[12, 10], [14, 6]]],
     ],
 )
 def test_mul(arg, expected_output):
@@ -92,7 +92,7 @@ def test_isequal(arg, expected_output):
         [a.Array(shape, 4, 2, 2), 8.0 / 3],
         [a.Array(shape, 6, 6, 7), 19.0 / 3],
         [a.Array(shape2, 4, 2, 2, 2), 10.0 / 4],
-        [a.Array(shape2, 6, 6, 7, 3), 19.0 / 4],
+        [a.Array(shape2, 6, 6, 7, 3), 22.0 / 4],
     ],
 )
 def test_mean(arg, expected_output):
