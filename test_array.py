@@ -4,6 +4,7 @@ import pytest
 test = "er"
 shape = (3,)
 shape2 = (2, 2)
+shape3 = (3, 3)
 margin = 1e-10
 
 
@@ -19,6 +20,13 @@ def test_string():
         [(a.Array(shape, 6, 6, 7), a.Array(shape, 4, 0, 2)), [10, 6, 9]],
         [(a.Array(shape2, 4, 2, 2, 2), a.Array(shape2, 1, 2, 1, 3)), [[5, 4], [3, 5]]],
         [(a.Array(shape2, 6, 6, 7, 3), a.Array(shape2, 1, 4, 0, 2)), [[7, 10], [7, 5]]],
+        [
+            (
+                a.Array(shape3, 1, 2, 3, 2, 1, 2, 3, 2, 1),
+                a.Array(shape3, 3, 2, 1, 4, 3, 2, 1, 3, 2),
+            ),
+            [[4, 4, 4], [6, 4, 4], [4, 5, 3]],
+        ],
     ],
 )
 def test_add(arg, expected_output):
