@@ -104,7 +104,23 @@ class Array:
         Returns:
             Array: a new array with every element multiplied with `other`.
         """
-        pass
+        try:
+            float(other)
+            ret_array = []
+
+            for i in range(0, len(self.array)):
+                ret_array.append(self.array[i] * other)
+            return ret_array
+        except:
+
+            try:
+                ret_array = []
+                if len(self.array) == len(other.array):
+                    for i in range(0, len(self.array)):
+                        ret_array.append(self.array[i] * other.array[i])
+                return ret_array
+            except:
+                print("Not yet implemented")
 
     def __rmul__(self, other):
         """Element-wise multiplies this Array with a number or array.
@@ -126,7 +142,13 @@ class Array:
         Returns:
             bool: True if the two arrays are equal. False otherwise.
         """
-        pass
+        if len(self.array) == len(other.array):
+            for i in range(0, len(self.array)):
+                if self.array[i] != other.array[i]:
+                    return False
+            return True
+        else:
+            raise ValueError("Array dimentions not equal")
 
     def is_equal(self, other):
         """Compares an Array element-wise with another Array or number.
@@ -140,7 +162,27 @@ class Array:
         Raises:
             ValueError: if the shape of self and other are not equal.
         """
-        pass
+        ret_array = []
+        try:
+            Scalar = float(other)
+
+            for i in range(0, len(self.array)):
+                if self.array[i] == Scalar:
+                    ret_array.append(True)
+                else:
+                    ret_array.append(False)
+            return ret_array
+        except:
+
+            if len(self.array) == len(other.array):
+                for i in range(0, len(self.array)):
+                    if self.array[i] == other.array[i]:
+                        ret_array.append(True)
+                    else:
+                        ret_array.append(False)
+                return ret_array
+            else:
+                raise ValueError("Arrays of unequal dimentions")
 
     def mean(self):
         """Computes the mean of the array
@@ -148,7 +190,10 @@ class Array:
         Returns:
             float: The mean of the array values.
         """
-        pass
+        ret = 0
+        for i in range(len(self.array)):
+            ret += self.array[i]
+        return float(ret) / len(self.array)
 
     def variance(self):
         """Computes the variance of the array
@@ -157,7 +202,11 @@ class Array:
         Returns:
             float: The mean of the array values.
         """
-        pass
+        ret = 0
+        mean = self.mean()
+        for i in range(len(self.array)):
+            ret += (self.array[i] - mean) ** 2
+        return float(ret) / len(self.array)
 
     def min_element(self):
         """Returns the smallest value of the array.
@@ -165,7 +214,11 @@ class Array:
         Returns:
             float: The value of the smallest element in the array.
         """
-        pass
+        placeholder = False
+        for i in range(len(self.array)):
+            if self.array[i] < placeholder or placeholder == False:
+                placeholder = self.array[i]
+        return placeholder
 
 
 """

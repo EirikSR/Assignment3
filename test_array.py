@@ -3,6 +3,7 @@ import pytest
 
 test = "er"
 shape = (3,)
+margin = 1e-10
 
 
 def test_string():
@@ -42,7 +43,7 @@ def test_sub(arg, expected_output):
     ],
 )
 def test_mul(arg, expected_output):
-    assert (arg[0] - arg[1]) == expected_output
+    assert (arg[0] * arg[1]) == expected_output
 
 
 @pytest.mark.parametrize(
@@ -66,7 +67,7 @@ def test_equal(arg, expected_output):
     ],
 )
 def test_isequal(arg, expected_output):
-    assert (arg[0] == arg[1]) == expected_output
+    assert arg[0].is_equal(arg[1]) == expected_output
 
 
 @pytest.mark.parametrize(
@@ -78,7 +79,7 @@ def test_isequal(arg, expected_output):
     ],
 )
 def test_mean(arg, expected_output):
-    assert a.Array(arg).mean() - expected_output < margin
+    assert arg.mean() - expected_output < margin
 
 
 @pytest.mark.parametrize(
