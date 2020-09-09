@@ -102,15 +102,28 @@ class Array:
         Returns:
             Array: the sum as a new array.
         """
-        try:
+        if self.shape == other.shape:
             ret_array = []
-            if len(self.array) == len(other.array):
-                for i in range(0, len(self.array)):
-                    ret_array.append(self.array[i] + other.array[i])
-            print(ret_array)
-            return ret_array
-        except:
+            try:
+                m = self.shape[1]
+
+                for x, y in zip(self.array, other.array):
+                    temp = []
+                    for i in range(0, len(x)):
+                        temp.append(x[i] + y[i])
+                    ret_array.append(temp)
+                return ret_array
+            except:
+                ret_array = []
+                if len(self.array) == len(other.array):
+                    for i in range(0, len(self.array)):
+                        ret_array.append(self.array[i] + other.array[i])
+                print(ret_array)
+                return ret_array
+
+        else:
             return NotImplemented
+            # raise ValueError("Array dimentions not equal; ")
 
     def __sub__(self, other):
         """Element-wise subtracts an Array or number from this Array.
@@ -121,14 +134,28 @@ class Array:
         Returns:
             Array: the difference as a new array.
         """
-        try:
+        if self.shape == other.shape:
             ret_array = []
-            if len(self.array) == len(other.array):
-                for i in range(0, len(self.array)):
-                    ret_array.append(self.array[i] - other.array[i])
-            return ret_array
-        except:
+            try:
+                m = self.shape[1]
+
+                for x, y in zip(self.array, other.array):
+                    temp = []
+                    for i in range(0, len(x)):
+                        temp.append(x[i] - y[i])
+                    ret_array.append(temp)
+                return ret_array
+            except:
+                ret_array = []
+                if len(self.array) == len(other.array):
+                    for i in range(0, len(self.array)):
+                        ret_array.append(self.array[i] - other.array[i])
+                print(ret_array)
+                return ret_array
+
+        else:
             return NotImplemented
+            # raise ValueError("Array dimentions not equal; ")
 
     def __getitem__(self, item):
         # Returns element at int item's location
