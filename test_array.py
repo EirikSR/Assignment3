@@ -6,6 +6,12 @@ shape = (3,)
 shape2 = (2, 2)
 shape3 = (3, 3)
 margin = 1e-10
+"""
+Tests are parametrized
+Tests are mostly for 1D and 2D, an aditional 3D addition test is included to test functionality
+Array class was constructed directly with multidimentional support, and tests for 2D used to test
+the functionality, since the logic follows for all higher dimentional arrays
+"""
 
 
 def test_string():

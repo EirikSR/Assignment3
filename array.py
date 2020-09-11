@@ -15,7 +15,7 @@ class Array:
         val_check = values[0]
         Array = []
         # print([shape[0], shape[1]])
-        try:
+        try:  # Tries to create multidimentional array
             m = shape[1]
 
             if len(values) != shape[0] * shape[1]:
@@ -24,7 +24,7 @@ class Array:
                 )
 
             for i in range(0, len(values)):
-                if i % shape[1] == 0:
+                if i % shape[1] == 0:  # Creates new row after columns are filled
                     Array.append([])
 
                 if isinstance(values[i], type(val_check)):
@@ -33,7 +33,7 @@ class Array:
                     raise ValueError(
                         f"Not all values have same type, contains {type(values[i])} and {type(val_check)}"
                     )
-        except:
+        except:  # Creates 1D array
             if len(values) != shape[0]:
                 raise ValueError(
                     f"Number of values doesnt mach shape. Values = {len(values)}, shape = {shape[0]}"
@@ -429,9 +429,3 @@ class Array:
                 if self.array[i] < placeholder or placeholder == False:
                     placeholder = self.array[i]
             return placeholder
-
-
-shape = (3, 2)
-my_array = Array(shape, 1, 2, 3, 3, 2, 1)
-print(my_array)
-print(my_array * 2)
